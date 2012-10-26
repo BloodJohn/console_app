@@ -13,6 +13,6 @@ void main ()
 
     printf ("GitHub test %s",buffer);
     scanf("%s", buffer);
-
+	//some comment
     free(buffer);
 }
