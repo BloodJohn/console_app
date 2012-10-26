@@ -16,5 +16,6 @@ void main ()
     printf ("GitHub test %s",buffer);
     scanf("%s", buffer);
 	//some comment
+	//two second comment
     free(buffer);
 }
