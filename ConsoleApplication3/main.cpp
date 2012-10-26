@@ -4,6 +4,8 @@
 
 void main ()
 {
+    //change by BloodJohn at work
+
     char *hello = "Hello world";
     char *buffer;
     buffer = (char*)malloc(strlen(hello) * sizeof(char));
