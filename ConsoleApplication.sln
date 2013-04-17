@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication3", "ConsoleApplication3\ConsoleApplication3.vcxproj", "{2AB99BBB-7F18-4403-82C6-4221F33FC080}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication2", "ConsoleApplication2\ConsoleApplication2.vcxproj", "{3E0109CE-6EA1-4C4D-84DE-5D45032B008F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.vcxproj", "{2AB99BBB-7F18-4403-82C6-4221F33FC080}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,6 +11,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E0109CE-6EA1-4C4D-84DE-5D45032B008F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3E0109CE-6EA1-4C4D-84DE-5D45032B008F}.Debug|Win32.Build.0 = Debug|Win32
+		{3E0109CE-6EA1-4C4D-84DE-5D45032B008F}.Release|Win32.ActiveCfg = Release|Win32
+		{3E0109CE-6EA1-4C4D-84DE-5D45032B008F}.Release|Win32.Build.0 = Release|Win32
 		{2AB99BBB-7F18-4403-82C6-4221F33FC080}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2AB99BBB-7F18-4403-82C6-4221F33FC080}.Debug|Win32.Build.0 = Debug|Win32
 		{2AB99BBB-7F18-4403-82C6-4221F33FC080}.Release|Win32.ActiveCfg = Release|Win32
