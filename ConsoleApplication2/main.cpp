@@ -12,11 +12,11 @@ public:
     int age;
 
 	Record() {}
-	~Record() {if (NULL != name) free(name);}
+	~Record() { if (NULL != name) free(name); }
 
-	void PrintRecord();
-	void FPrintRecord(FILE* pFile);
-	int FScanRecord(FILE* pFile);
+	void Print();
+	void FPrint(FILE* pFile);
+	int FScan(FILE* pFile);
 };
 
 int main ()
@@ -36,16 +36,16 @@ int main ()
     
     if (pFile != NULL)
     {
-        item.FPrintRecord(pFile);
+        item.FPrint(pFile);
         fclose(pFile);
     }
 
     pFile = fopen ("myfile.txt","r");
     if (pFile != NULL)
     {
-        while (item.FScanRecord(pFile) != EOF)
+        while (item.FScan(pFile) != EOF)
         {
-            item.PrintRecord();
+            item.Print();
         }
         fclose(pFile);
     }
@@ -57,17 +57,17 @@ int main ()
     return 0;
 }
 
-void Record::PrintRecord()
+void Record::Print()
 {
 	printf ("%d %d %s\n",age, sex, name);
 }
 
-void Record::FPrintRecord(FILE* pFile)
+void Record::FPrint(FILE* pFile)
 {
 	fprintf (pFile, "%d %d %s\n",age, sex, name);
 }
 
-int Record::FScanRecord(FILE* pFile)
+int Record::FScan(FILE* pFile)
 {
 	return fscanf (pFile, "%d %d %s\n", age, sex, name);
 }
