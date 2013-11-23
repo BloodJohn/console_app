@@ -16,15 +16,17 @@ typedef struct
 void PrintRecord(const Record*); // объявление типов параметров
 void PrintFileRecord(FILE*, const Record*);
 int ScanFileRecord(FILE*, Record*);
-void StrReplace(const char* source, char* destination, const char oldChar, const char newChar);
+void ReplaceStr(const char* source, char* destination, const char oldChar, const char newChar);
 
 int main () // основная функция, которая вызывается при запуске исполняемого файла (точка входа)
 {// начало тела основной функции
     // объявление переменной c типом данных, структура "Record"
     Record item;
+	char* myName = "John Blood";
+	char* myPhone = "+7(921)1231234";
 
     // выделение памяти для массива символов, указателю присваивается адрес начала выделенной области памяти
-    item.name = (char*)malloc((strlen("John Blood")+1) * sizeof(char)); 
+	item.name = (char*)malloc((strlen(myName) + 1) * sizeof(char));
     // берем длинну строки "John", добавляем 1 (для нулевого байта в конце строки) 
 	// и умножаем ее на размер одного символа в памяти
     // получаем указатель на выделенную память типа (void*) и приводим его к строковому типу (char*)
@@ -33,8 +35,8 @@ int main () // основная функция, которая вызывается при запуске исполняемого фай
 	if (item.name == NULL) return -1;
     
     // копирование байтов в выделенный участок памяти
-    strcpy(item.name, "John Blood"); // мы передаем в функцию, в качестве аргумента, поле "name" переменной "item"
-	strcpy(item.phone, "+7(921)1231234"); // инициализация второй строки
+    strcpy(item.name, myName); // мы передаем в функцию, в качестве аргумента, поле "name" переменной "item"
+	strcpy(item.phone, myPhone); // инициализация второй строки
 
     // инициализация полей переменной(структуры)
     item.sex = 1; // присваиваем значение и тем самым инициализируем поле "sex" переменной "item"
@@ -61,7 +63,7 @@ int main () // основная функция, которая вызывается при запуске исполняемого фай
         fclose(pFile);
     }
 
-    scanf("%s\n"); // ждем ввода, чтобы консоль не закрывалась
+	getchar(); // ждем ввода, чтобы консоль не закрывалась
 	
 	free(item.name);// освобождаем выделенную в куче(heap) память
 
@@ -85,8 +87,8 @@ void PrintFileRecord(FILE* pFile, const Record* itemPrint)
 	char* phone = (char*)malloc((strlen(itemPrint->phone) + 1) * sizeof(char));
 
 	//используя копирование строк - заменяем пробелы на подчеркивания (исключаем лишние разделители при чтении)
-	StrReplace(itemPrint->name, name, ' ', '_');
-	StrReplace(itemPrint->phone, phone, ' ', '_');
+	ReplaceStr(itemPrint->name, name, ' ', '_');
+	ReplaceStr(itemPrint->phone, phone, ' ', '_');
 
     // пишем данные в файл (сериализация объекта)
 	fprintf(pFile, "%s %d %d %s\n", name, itemPrint->age, itemPrint->sex, phone);
@@ -104,13 +106,16 @@ int ScanFileRecord(FILE* pFile, Record* itemScan)
     // а здесь мы передаем аргументами указатели на переменные, чтобы изменить их значения внутри вызова функции
     // для name и phone не указывается амперсанд, потому эта переменная УЖЕ указатель
 
-	StrReplace(itemScan->name, itemScan->name, '_', ' ');
-	StrReplace(itemScan->phone, itemScan->phone, '_', ' ');
+	if (4 == result)
+	{
+		ReplaceStr(itemScan->name, itemScan->name, '_', ' ');
+		ReplaceStr(itemScan->phone, itemScan->phone, '_', ' ');
+	}
 
 	return result;
 }
 
-void StrReplace(const char* source, char* destination, const char oldChar, const char newChar)
+void ReplaceStr(const char* source, char* destination, const char oldChar, const char newChar)
 {
 	//копированием из аргументов в параметры функции, создаются два новых указателя на строки, которые мы можем менять внутри функции
 

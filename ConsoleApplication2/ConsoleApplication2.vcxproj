@@ -77,9 +77,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="record.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="record.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
