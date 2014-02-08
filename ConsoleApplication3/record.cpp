@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "record.h"
 
 //приватная функция библиотеки
 void ReplaceStr(const char* source, char* destination, const char oldChar, const char newChar);
@@ -11,8 +10,8 @@ void PrintRecord(const Record *itemPrint)
 
 void PrintFileRecord(FILE* pFile, const Record* itemPrint)
 {
-	char name[50];
-	char phone[15];
+	char name[NAME_LENGTH];
+	char phone[PHONE_LENGTH];
 
 	ReplaceStr(itemPrint->name, name, ' ', '_');
 	ReplaceStr(itemPrint->phone, phone, ' ', '_');
@@ -38,7 +37,7 @@ Record* ScanFileRecord(FILE* pFile)
 	Record* result = new Record();
 	int scanResult = ScanFileRecord(pFile, result);
 
-	if (ScanFileRecord(pFile, result)) return result;
+	if (ScanFileRecord(pFile, result) != EOF) return result;
 
 	delete result;
 	return NULL;

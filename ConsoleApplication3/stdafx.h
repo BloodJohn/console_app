@@ -10,3 +10,5 @@
 #include <malloc.h> 
 #include <string.h>
 
+#include "record.h"
+#include "listRecord.h"
