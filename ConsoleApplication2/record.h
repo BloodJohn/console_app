@@ -1,5 +1,5 @@
-#include <stdio.h> //работа с потоками
-#include <malloc.h> //работа с динамической памятью
+п»ї#include <stdio.h> //СЂР°Р±РѕС‚Р° СЃ РїРѕС‚РѕРєР°РјРё
+#include <malloc.h> //СЂР°Р±РѕС‚Р° СЃ РґРёРЅР°РјРёС‡РµСЃРєРѕР№ РїР°РјСЏС‚СЊСЋ
 
 #define NAME_LENGTH 50
 #define PHONE_LENGTH 15

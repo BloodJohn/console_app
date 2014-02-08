@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "record.h"
 
 int main()
@@ -31,7 +31,7 @@ int main()
 		}
 	}
 
-	getchar(); // ждем ввода, чтобы консоль не закрывалась
+	getchar(); // Р¶РґРµРј РІРІРѕРґР°, С‡С‚РѕР±С‹ РєРѕРЅСЃРѕР»СЊ РЅРµ Р·Р°РєСЂС‹РІР°Р»Р°СЃСЊ
 	return 0;
 }
 

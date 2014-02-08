@@ -1,6 +1,7 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
+#include "record.h"
 
-//приватная функция библиотеки
+//РїСЂРёРІР°С‚РЅР°СЏ С„СѓРЅРєС†РёСЏ Р±РёР±Р»РёРѕС‚РµРєРё
 void ReplaceStr(const char* source, char* destination, const char oldChar, const char newChar);
 
 void PrintRecord(const Record *itemPrint)
@@ -10,8 +11,8 @@ void PrintRecord(const Record *itemPrint)
 
 void PrintFileRecord(FILE* pFile, const Record* itemPrint)
 {
-	char name[NAME_LENGTH];
-	char phone[PHONE_LENGTH];
+	char name[50];
+	char phone[15];
 
 	ReplaceStr(itemPrint->name, name, ' ', '_');
 	ReplaceStr(itemPrint->phone, phone, ' ', '_');
@@ -37,7 +38,7 @@ Record* ScanFileRecord(FILE* pFile)
 	Record* result = new Record();
 	int scanResult = ScanFileRecord(pFile, result);
 
-	if (ScanFileRecord(pFile, result) != EOF) return result;
+	if (ScanFileRecord(pFile, result)) return result;
 
 	delete result;
 	return NULL;
@@ -45,7 +46,7 @@ Record* ScanFileRecord(FILE* pFile)
 
 void ReplaceStr(const char* source, char* destination, const char oldChar, const char newChar)
 {
-	//копируем символ строки, и смещаем указатели на символ вправо, пока не наткнемся на нулевой символ
+	//РєРѕРїРёСЂСѓРµРј СЃРёРјРІРѕР» СЃС‚СЂРѕРєРё, Рё СЃРјРµС‰Р°РµРј СѓРєР°Р·Р°С‚РµР»Рё РЅР° СЃРёРјРІРѕР» РІРїСЂР°РІРѕ, РїРѕРєР° РЅРµ РЅР°С‚РєРЅРµРјСЃСЏ РЅР° РЅСѓР»РµРІРѕР№ СЃРёРјРІРѕР»
 	while (0 != *source)
 	{
 		if (oldChar == *source)
@@ -57,6 +58,6 @@ void ReplaceStr(const char* source, char* destination, const char oldChar, const
 		destination++;
 	}
 
-	//заканчиваем копию нулевым байтом
+	//Р·Р°РєР°РЅС‡РёРІР°РµРј РєРѕРїРёСЋ РЅСѓР»РµРІС‹Рј Р±Р°Р№С‚РѕРј
 	*destination = 0;
 }

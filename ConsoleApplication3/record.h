@@ -1,18 +1,14 @@
-// Библиотека телефонного справочника
+п»ї// Р‘РёР±Р»РёРѕС‚РµРєР° С‚РµР»РµС„РѕРЅРЅРѕРіРѕ СЃРїСЂР°РІРѕС‡РЅРёРєР°
+// РѕРїРёСЃС‹РІР°РµС‚ СЃС‚СЂСѓРєС‚СѓСЂСѓ РѕРґРЅРѕР№ Р·Р°РїРёСЃРё
+// Рё РѕРїРµСЂР°С†РёРё РЅР°Рґ РЅРµСЋ
 
-// описывает структуру одной записи и операции над нею
-
-#pragma once
-
-#define NAME_LENGTH 50
-#define PHONE_LENGTH 15
 
 struct Record
 {
-	char name[NAME_LENGTH];
+	char name[50];
 	int sex;
 	int age;
-	char phone[PHONE_LENGTH];
+	char phone[15];
 	Record* next;
 };
 
