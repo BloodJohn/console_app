@@ -8,6 +8,8 @@ void PrintRecord(const Record *itemPrint)
 	printf("%s %d %d %s\n", itemPrint->name, itemPrint->age, itemPrint->sex, itemPrint->phone);
 }
 
+
+
 void PrintFileRecord(FILE* pFile, const Record* itemPrint)
 {
 	char name[NAME_LENGTH];
@@ -41,6 +43,20 @@ Record* ScanFileRecord(FILE* pFile)
 
 	delete result;
 	return NULL;
+}
+
+void FreeRecord(Record* head)
+{
+	if (NULL == head) return;
+	Record* current = head;
+	Record* next = head->next;
+
+	while (NULL != current)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
 }
 
 void ReplaceStr(const char* source, char* destination, const char oldChar, const char newChar)

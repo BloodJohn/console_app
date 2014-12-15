@@ -23,3 +23,4 @@ void PrintFileRecord(FILE*, const Record*);
 
 int ScanFileRecord(FILE*, Record*);
 Record* ScanFileRecord(FILE*);
+void FreeRecord(Record* head);

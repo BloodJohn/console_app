@@ -31,6 +31,8 @@ int main()
 		}
 	}
 
+	FreeRecord(headItem);
+
 	getchar(); // ждем ввода, чтобы консоль не закрывалась
 	return 0;
 }
