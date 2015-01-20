@@ -1,14 +1,18 @@
-// binaryTree.cpp: определяет точку входа для консольного приложения.
+п»ї// binaryTree.cpp: РѕРїСЂРµРґРµР»СЏРµС‚ С‚РѕС‡РєСѓ РІС…РѕРґР° РґР»СЏ РєРѕРЅСЃРѕР»СЊРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 //
 
 #include "stdafx.h"
 
 #define NODE_LENGTH 15
 
-//http://ru.wikipedia.org/wiki/Двоичное_дерево_поиска
+//http://ru.wikipedia.org/wiki/Р”РІРѕРёС‡РЅРѕРµ_РґРµСЂРµРІРѕ_РїРѕРёСЃРєР°
+//РђР’Р›-РґРµСЂРµРІСЊСЏ
+//http://habrahabr.ru/post/150732/ 
+
 struct Node
 {
 	int key;
+	int height;
 	char value[NODE_LENGTH];
 	Node *left;
 	Node *right;
@@ -24,7 +28,7 @@ void PrintNode(Node* root);
 void PrintNode(Node* root, int deep);
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, _TCHAR* argv[])
 {
 	//printf("hello world");
 
@@ -45,6 +49,7 @@ Node* CreateNode(int key, char value[NODE_LENGTH])
 	Node* result = new Node;
 	result->key = key;
 	strncpy_s(result->value, value, NODE_LENGTH);
+	result->height = 1;
 	result->left = NULL;
 	result->right = NULL;
 
@@ -56,11 +61,12 @@ Node* InsertNode(Node* root, Node* newNode)
 	if (NULL == root) return NULL;
 	if (NULL == newNode) return root;
 
-	if (newNode->key < root->key) //Вставляем влево
+	if (newNode->key < root->key) //Р’СЃС‚Р°РІР»СЏРµРј РІР»РµРІРѕ
 	{
 		if (NULL == root->left)
 		{
 			root->left = newNode;
+			newNode->height = root->height + 1;
 		}
 		else
 		{
@@ -69,11 +75,12 @@ Node* InsertNode(Node* root, Node* newNode)
 
 		return root;
 	}
-	else if (newNode->key > root->key) //Вставляем вправо
+	else if (newNode->key > root->key) //Р’СЃС‚Р°РІР»СЏРµРј РІРїСЂР°РІРѕ
 	{
 		if (NULL == root->right)
 		{
 			root->right = newNode;
+			newNode->height = root->height + 1;
 		}
 		else
 		{
@@ -82,71 +89,95 @@ Node* InsertNode(Node* root, Node* newNode)
 
 		return root;
 	}
-	else //Когда они равны - заменяем
+	else //РљРѕРіРґР° РѕРЅРё СЂР°РІРЅС‹ - Р·Р°РјРµРЅСЏРµРј
 	{
 		newNode->left = root->left;
 		newNode->right = root->right;
+		newNode->height = root->height;
+
 		delete root;
 
 		return newNode;
 	}
 }
 
-Node* DeleteNode(Node* root, int deletedKey)
+Node* DeleteNode(Node* parent, Node* current, int deletedKey)
 {
-	//Если дерево T пусто, остановиться;
-	if (NULL == root) return NULL;
+	//Р•СЃР»Рё РґРµСЂРµРІРѕ T РїСѓСЃС‚Рѕ, РѕСЃС‚Р°РЅРѕРІРёС‚СЊСЃСЏ;
+	if (NULL == current) return NULL;
 
-	//Иначе сравнить K с ключом X корневого узла n. 
-	if (deletedKey > root->key)
+	//РРЅР°С‡Рµ СЃСЂР°РІРЅРёС‚СЊ K СЃ РєР»СЋС‡РѕРј X РєРѕСЂРЅРµРІРѕРіРѕ СѓР·Р»Р° n. 
+	if (deletedKey > current->key)
 	{
-		//Если K>X, циклически удалить K из правого поддерева Т;
-		root->right = DeleteNode(root->right, deletedKey);
-		return root;
+		//Р•СЃР»Рё K>X, С†РёРєР»РёС‡РµСЃРєРё СѓРґР°Р»РёС‚СЊ K РёР· РїСЂР°РІРѕРіРѕ РїРѕРґРґРµСЂРµРІР° Рў;
+		current->right = DeleteNode(current, current->right, deletedKey);
+		return current;
 	}
 
-	//Иначе сравнить K с ключом X корневого узла n. 
-	else if (deletedKey < root->key)
+	//РРЅР°С‡Рµ СЃСЂР°РІРЅРёС‚СЊ K СЃ РєР»СЋС‡РѕРј X РєРѕСЂРЅРµРІРѕРіРѕ СѓР·Р»Р° n. 
+	else if (deletedKey < current->key)
 	{
-		//Если K<X, циклически удалить K из левого поддерева Т;
-		root->left = DeleteNode(root->left, deletedKey);
-		return root;
+		//Р•СЃР»Рё K<X, С†РёРєР»РёС‡РµСЃРєРё СѓРґР°Р»РёС‚СЊ K РёР· Р»РµРІРѕРіРѕ РїРѕРґРґРµСЂРµРІР° Рў;
+		current->left = DeleteNode(current, current->left, deletedKey);
+		return current;
 	}
 
-	//Если K=X, то необходимо рассмотреть три случая. 
+	//Р•СЃР»Рё K=X, С‚Рѕ РЅРµРѕР±С…РѕРґРёРјРѕ СЂР°СЃСЃРјРѕС‚СЂРµС‚СЊ С‚СЂРё СЃР»СѓС‡Р°СЏ. 
 	else
 	{
-		//Если обоих детей нет, то 
-		if (NULL == root->left  && NULL == root->right)
-		{
-			//удаляем текущий узел и обнуляем ссылку на него у родительского узла;
+		Node* result = NULL;
 
-		}
-		//Если нет правого ребенка
-		else if (NULL != root->left  && NULL == root->right)
+		//Р•СЃР»Рё РѕР±РѕРёС… РґРµС‚РµР№ РЅРµС‚, С‚Рѕ 
+		if (NULL == current->left  && NULL == current->right)
 		{
-			//удаляем текущий узел
-			//возвращаем ссылку на левого ребенка
+			//СѓРґР°Р»СЏРµРј С‚РµРєСѓС‰РёР№ СѓР·РµР» Рё РѕР±РЅСѓР»СЏРµРј СЃСЃС‹Р»РєСѓ РЅР° РЅРµРіРѕ Сѓ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ СѓР·Р»Р°;
+			delete current;
+			return result;
 		}
-		//Если нет левого ребенка
-		else if (NULL == root->left  && NULL != root->right)
-		{
-			//удаляем текущий узел
-			//возвращаем ссылку на правого ребенка
+		//Р•СЃР»Рё РЅРµС‚ РїСЂР°РІРѕРіРѕ СЂРµР±РµРЅРєР°
+		else if (NULL != current->left  && NULL == current->right)
+		{		
+			//РІРѕР·РІСЂР°С‰Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° Р»РµРІРѕРіРѕ СЂРµР±РµРЅРєР°
+			result = current->right;
+			//СѓРґР°Р»СЏРµРј С‚РµРєСѓС‰РёР№ СѓР·РµР»
+			delete current;
+			return result;
 		}
-		//Если оба ребёнка присутствуют, то 
-		else if (NULL != root->left  && NULL != root->right)
+		//Р•СЃР»Рё РЅРµС‚ Р»РµРІРѕРіРѕ СЂРµР±РµРЅРєР°
+		else if (NULL == current->left  && NULL != current->right)
+		{		
+			//РІРѕР·РІСЂР°С‰Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° РїСЂР°РІРѕРіРѕ СЂРµР±РµРЅРєР°
+			result = current->right;
+			//СѓРґР°Р»СЏРµРј С‚РµРєСѓС‰РёР№ СѓР·РµР»
+			delete current;
+			return result;
+		}
+		//Р•СЃР»Рё РѕР±Р° СЂРµР±С‘РЅРєР° РїСЂРёСЃСѓС‚СЃС‚РІСѓСЋС‚, С‚Рѕ 
+		else if (NULL != current->left  && NULL != current->right)
 		{
-			//Если левый узел m правого поддерева отсутствует (n->right->left) 
-			if (NULL == root->right->left)
+			result = current->right;
+			//Р•СЃР»Рё Р»РµРІС‹Р№ СѓР·РµР» m РїСЂР°РІРѕРіРѕ РїРѕРґРґРµСЂРµРІР° РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ (n->right->left) 
+			if (NULL == result->left)
 			{
-				//смещаем правый узел вверх и добавляем к нему левый
+				//СЃРјРµС‰Р°РµРј РїСЂР°РІС‹Р№ СѓР·РµР» РІРІРµСЂС… Рё РґРѕР±Р°РІР»СЏРµРј Рє РЅРµРјСѓ Р»РµРІС‹Р№
+				result->left = current->left;
+				delete current;
+				return result;
 			}
 			else
 			{
-				//возьмем самый левый узел m, правого поддерева n->right;
-				//рекурсивно удаляем его со старого места
-				//переносим удаленный (самый левый) в корень
+				Node* lastLeft = current->right;
+				//РІРѕР·СЊРјРµРј СЃР°РјС‹Р№ Р»РµРІС‹Р№ СѓР·РµР» m, РїСЂР°РІРѕРіРѕ РїРѕРґРґРµСЂРµРІР° n->right;
+				while (lastLeft->left != NULL)	lastLeft = lastLeft->left;
+
+				//СЃРєРѕРїРёСЂСѓРµРј РґР°РЅРЅС‹Рµ (РєСЂРѕРјРµ СЃСЃС‹Р»РѕРє РЅР° РґРѕС‡РµСЂРЅРёРµ СЌР»РµРјРµРЅС‚С‹) РёР· m РІ n;
+				current->key = lastLeft->key;
+				strncpy_s(current->value, lastLeft->value, NODE_LENGTH);
+				
+				//СЂРµРєСѓСЂСЃРёРІРЅРѕ СѓРґР°Р»СЏРµРј РµРіРѕ СЃРѕ СЃС‚Р°СЂРѕРіРѕ РјРµСЃС‚Р°
+				current->right = DeleteNode(current, current->right, current->key);
+
+				return current;
 			}
 		}
 	}
@@ -162,7 +193,7 @@ void PrintNode(Node* root, int deep)
 	if (NULL == root) return;
 
 	for (int i = 0; i<deep; i++) printf("  ");
-	printf("%d key: %d value: %s\n", deep, root->key, root->value);
+	printf("%d(%d) key: %d value: %s\n", deep, root->height, root->key, root->value);
 
 	if (root->left != NULL)
 	{
