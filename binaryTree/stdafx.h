@@ -11,6 +11,6 @@
 #include <tchar.h>
 #include <string.h>
 
-
+#include "TreeNode.h"
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
