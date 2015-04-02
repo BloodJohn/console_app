@@ -52,7 +52,9 @@ Node* BalanceRotation(Node* root)
 		if (right <= left) return SmallRightRotation(root);
 		else if (root->left->right) return BigRightRotation(root);
 	}
+	
 	//иначе в балансировке не нуждается
+	return root;
 }
 
 Node* SmallLeftRotation(Node* root)

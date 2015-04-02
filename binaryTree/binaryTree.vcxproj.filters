@@ -24,8 +24,8 @@
     <ClInclude Include="targetver.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="TreeNode.h">
-      <Filter>Файлы исходного кода</Filter>
+    <ClInclude Include="treeNode.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -35,7 +35,7 @@
     <ClCompile Include="binaryTree.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="TreeNode.cpp">
+    <ClCompile Include="treeNode.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
